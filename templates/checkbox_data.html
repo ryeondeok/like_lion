@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    
+    <p>{{ product_name }} 으로 검색하셨습니다. </p>
+    
+    <!-- 아무리 생각해봐도 답이안나옴 if 문으로 써도 안되고......-->
+    {% for c in c_id%}
+    {% for p in product %}
+        {% if p.category_id == c %}
+            <p>{{p}}</p>
+        {% endif %}
+    {% endfor %}
+    {% endfor %}
+
+
+
+{% endblock%}

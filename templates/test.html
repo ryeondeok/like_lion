@@ -1,0 +1,22 @@
+{% extends 'base.html '%}
+
+
+
+
+{% block content %}
+
+<div class='category'>
+    <form action="checkbox" method="post">
+    {% csrf_token %}
+    {% for c in category %}
+        <a>{{ c.name }}</a>
+        <input class="" type="checkbox" name="checks[]" value="{{ c.name }}">
+
+    {% endfor %}
+    <button type="submit"> 검색하기 </button>
+    </form>
+</div>
+
+
+
+{% endblock%}

@@ -1,0 +1,86 @@
+{% extends 'base.html' %}
+
+{% block title %} 회사 리스트 출력 {% endblock %}
+
+<!--
+    추가내용  : 페이징 내역 추가
+
+
+-->
+
+
+{% block content %}
+
+<div>
+    <form action="" method="get">
+    <div class="input-group mb-3">
+        <label for="search_key" ></label>
+        <input type="text" class="form-control" name="search_key" label="search_key" value = "{{search_key}}" placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요" aria-label="Recipient's username" aria-describedby="button-addon2">
+        <input class="btn btn-outline-secondary" type="submit" id="button-addon2" value = "검색하기">
+    </div>
+    </form>
+</div>
+
+<div class='category'>
+    <form action="checkbox" method="post">
+    {% csrf_token %}
+    {% for c in category %}
+        <a>{{ c.name }}</a>
+        <input class="" type="checkbox" name="checks[]" value="{{ c.name }}.{{ c.id  }}" >
+    {% endfor %}
+    </form>
+</div>
+{% for company in company_list_all %}
+<div class="card" style="width: 18rem;">
+    <img class="card-img-top" src="{{company.company_image.url}}" alt="Card image cap">
+    <div class="card-body">
+    <h5 class="card-title">{{company.company_name}}</h5>
+    <p class="card-title"><span class="badge bg-secondary">{{company.company_category}}</span></p>
+    <p class="card-text">{{company.introduce_company}}</p>
+    <a class="btn btn-primary btn-sm" href="{% url 'company_detail' company.id %}">상세정보</a>
+    </div>
+</div>
+<br>
+
+{% endfor %}
+
+<!-- 페이지 출력 코드 -->
+
+    <ul class ="pagination justify-content-center">
+        {% if page_obj.has_previous %}
+        <li class="page-item">
+            <a class= "page-link" href="?page={{page_obj.previous_page_number}}">이전</a>
+        </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#"> 이전</a>
+        </li>
+        {% endif %}
+        {% for page_number in page_obj.paginator.page_range %}
+        {% if page_number >= page_obj.number|add:-5 and page_number <= page_obj.number|add:5 %}
+            {% if page_number == page_obj.number %}
+            <li class= "page-item active" aria-current="page">
+                <a class ="page-link" href="?page={{page_number}}">
+                    {{page_number}}
+                </a>
+            </li>
+            {% else %}
+            <li class="page-item">
+                <a class ="page-link" href="?page={{page_number}}">{{page_number}}</a>
+            </li>
+            {% endif %}
+        {% endif %}    
+        {% endfor %}
+        {% if page_obj.has_next %}
+            <li class= "page-item">
+                <a class ="page-link" href="?page={{page_obj.next_page_number}}">다음</a>
+            </li>
+        {% else %}
+        <li class="page-item disabled">
+            <a class="page-link" tabindex="-1" aria-disabled="true" href="#"> 다음</a>
+        </li>
+        {% endif %}
+    </ul>
+
+{% endblock %}
+

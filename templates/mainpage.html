@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% block title %} 메인페이지 입니다 {% endblock %}
+
+
+{% block content %}
+
+
+<img src="/static/image/ex.jpg" alt="main text" width="200" height="200"><br>
+<img src="/static/image/ex.jpg" alt="main image" width="200" height="200"><br>
+
+<a href="{% url 'company_list' %}" >회사 리스트 보기</a><br>
+
+
+<form action="{% url 'searchapp:search' %}" method="get">
+    <label for="search_key" placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요">검색하기</label>
+    <input type="text" name="search_key" label="search_key">
+    <input type="submit" >
+</form>
+
+
+
+{% endblock %}

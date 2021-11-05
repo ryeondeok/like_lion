@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %} 검색폼 {% endblock %}
+
+
+<!--  사실상 이페이지는 안씀 .-->
+
+{% block content %}
+
+    <form action="" mehtod="get">
+        <label for="search_bar"> 검색(페이지 바뀜)</label>
+        <input type="text" name="search_key" placeholder="원하는 분야의 제조업체나 비슷한 제품을 검색해보세요">
+        <input type="submit">
+    </form>
+
+    <div class="search_list">
+        <table>
+        {% for s in search_key %}
+            <tr>
+                <td><a href="">{{s.company_name}}</a></td>
+                <!-- 이 부분 수정해야함 어떻게 하면 오류가 안나는지 모르겠음. --> 
+                <td>{{ s.number }}</td>
+                <td>{{ s.area }}</td>
+            </tr>
+
+        </table>
+        {% endfor %}
+    </div>
+
+
+
+
+{% endblock%}
